@@ -45,7 +45,7 @@ h2{font-size:26px;margin:5px 0 2px}
 .chev{font-size:24px;color:var(--muted)}
 .detail{display:none}.detail.show{display:block}
 .illustration{background:#f4efe8;border-radius:26px;padding:14px;margin-bottom:16px}
-.illustration svg{width:100%;height:auto;display:block}
+.illustration svg{width:100%;height:auto;display:block}.big-illustration{padding:8px}.big-illustration svg{min-height:280px}
 .instructions{font-size:16px;line-height:1.75}
 .instructions ul{margin-top:6px;padding-left:22px}
 .tip{background:#edf1ea;border-radius:18px;padding:14px 16px;margin-top:14px}
@@ -92,22 +92,22 @@ select,input[type=range]{width:48%}
   <div class="days" id="days"></div>
 </section>
 
-<section class="card">
-  <div class="section-title">ลำดับท่าในวันนี้</div>
-  <div class="subtitle" style="margin-bottom:14px">แตะท่าใดก็ได้เพื่อดูภาพ วิธีทำ และฟังคำบรรยาย</div>
-  <div class="exercise-list" id="exerciseList"></div>
-</section>
-
-<section class="card detail" id="detail">
+<section class="card detail show" id="detail">
   <div class="kicker" id="detailNo">ช่วงที่ 1 · 1:00</div>
   <h2 id="detailName">Breathing Focus</h2>
-  <div class="illustration" id="art"></div>
+  <div class="illustration big-illustration" id="art"></div>
   <div class="instructions"><strong>วิธีทำ</strong><ul id="steps"></ul></div>
   <div class="tip" id="tip">🌿 จุดที่ต้องระวัง</div>
   <div class="voice">
     <button class="btn primary" id="speakBtn">🔊 ฟังคำบรรยายท่านี้</button>
     <button class="btn" id="stopBtn">■ หยุดเสียง</button>
   </div>
+</section>
+
+<section class="card">
+  <div class="section-title">ลำดับท่าในวันนี้</div>
+  <div class="subtitle" style="margin-bottom:14px">แตะท่าใดก็ได้เพื่อดูภาพ วิธีทำ และฟังคำบรรยาย</div>
+  <div class="exercise-list" id="exerciseList"></div>
 </section>
 
 <section class="card">
@@ -261,7 +261,9 @@ function showExercise(i){
  document.getElementById("art").innerHTML=art(e.art);
  document.getElementById("steps").innerHTML=e.steps.map(s=>`<li>${s}</li>`).join("");
  document.getElementById("tip").textContent="🌿 จุดที่ต้องระวัง · "+e.tip;
+ if(window.innerWidth<=760) document.getElementById("detail").scrollIntoView({behavior:"smooth",block:"start"});
 }
+function coachText(e, intro="เริ่มท่า"){return `${intro} ${e.name} ค่ะ วิธีทำ: ${e.steps.join(". ")}. จุดที่ต้องระวังคือ ${e.tip}. ทำช้า ๆ และหายใจตามจังหวะนะคะ`}
 function updateTimer(){
  const m=String(Math.floor(remaining/60)).padStart(2,"0"),s=String(remaining%60).padStart(2,"0");
  document.getElementById("timer").textContent=`${m}:${s}`;
@@ -269,17 +271,17 @@ function updateTimer(){
 }
 function start(){
  if(running)return; running=true;
- if(voiceOn)speak(`เริ่ม ${exercises[current].name} ค่ะ`);
+ if(voiceOn)speak(coachText(exercises[current], "เริ่มท่า"));
  timerId=setInterval(()=>{
    remaining--;updateTimer();
    if(remaining<=0){clearInterval(timerId);running=false;
-     if(current<exercises.length-1){current++;showExercise(current);if(voiceOn)speak(`ต่อไป ${exercises[current].name} ค่ะ`);start()}
+     if(current<exercises.length-1){current++;showExercise(current);if(voiceOn)speak(coachText(exercises[current], "ต่อไปท่า"));start()}
      else {if(voiceOn)speak("จบเซสชันวันนี้แล้วค่ะ เก่งมาก");}
    }
  },1000);
 }
 function pause(){running=false;clearInterval(timerId);if(voiceOn)speak("พักก่อนนะคะ")}
-function skip(){clearInterval(timerId);running=false;if(current<exercises.length-1){current++;showExercise(current);if(voiceOn)speak(`ข้ามไป ${exercises[current].name} ค่ะ`)}else{speak("ครบทุกท่าแล้วค่ะ")}}
+function skip(){clearInterval(timerId);running=false;if(current<exercises.length-1){current++;showExercise(current);if(voiceOn)speak(coachText(exercises[current], "ข้ามไปท่า"))}else{speak("ครบทุกท่าแล้วค่ะ")}}
 function speak(text){
  if(!voiceOn)return;
  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang="th-TH";u.rate=parseFloat(document.getElementById("rate").value);u.volume=parseFloat(document.getElementById("volume").value);
@@ -293,8 +295,8 @@ function loadVoices(){
 document.getElementById("startBtn").onclick=start;
 document.getElementById("pauseBtn").onclick=pause;
 document.getElementById("skipBtn").onclick=skip;
-document.getElementById("repeatBtn").onclick=()=>{const e=exercises[current];speak(`${e.name}. ${e.steps.join(". ")}. จุดที่ต้องระวังคือ ${e.tip}`)};
-document.getElementById("speakBtn").onclick=()=>{const e=exercises[current];speak(`${e.name}. ${e.steps.join(". ")}. ${e.tip}`)};
+document.getElementById("repeatBtn").onclick=()=>{const e=exercises[current];speak(coachText(e, "ท่า"))};
+document.getElementById("speakBtn").onclick=()=>{const e=exercises[current];speak(coachText(e, "ท่า"))};
 document.getElementById("stopBtn").onclick=()=>speechSynthesis.cancel();
 document.getElementById("voiceToggle").onclick=()=>{voiceOn=!voiceOn;document.getElementById("voiceToggle").textContent=voiceOn?"🔊 เสียงโค้ช: เปิด":"🔇 เสียงโค้ช: ปิด";if(!voiceOn)speechSynthesis.cancel()};
 speechSynthesis.onvoiceschanged=loadVoices;
