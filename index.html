@@ -11,7 +11,7 @@
 :root{--bg:#f7f2ed;--card:#fffdf9;--ink:#403b37;--muted:#8d847c;--green:#879783;--green2:#aab7a6;--line:#e7ded6;--peach:#ead5c5}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif}
 body{padding-bottom:env(safe-area-inset-bottom)}button{font:inherit}
-.app{width:min(100%,520px);margin:auto;padding:18px 16px 32px}.head{display:flex;justify-content:space-between;align-items:center}.eyebrow{font-size:12px;color:var(--muted)}h1{font-size:26px;margin:4px 0 0}.pill{padding:8px 10px;border-radius:14px;background:#eee8e1;font-size:12px;font-weight:700}
+.app{width:min(100%,520px);margin:auto;padding:18px 16px 32px}.head{display:flex;justify-content:space-between;align-items:center}.brand{display:flex;align-items:center;gap:10px}.brand-logo{width:52px;height:52px;border-radius:15px;object-fit:cover;box-shadow:0 4px 12px #00000012}.eyebrow{font-size:12px;color:var(--muted)}h1{font-size:26px;margin:4px 0 0}.pill{padding:8px 10px;border-radius:14px;background:#eee8e1;font-size:12px;font-weight:700}
 .card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:18px;margin-top:15px;box-shadow:0 10px 30px #00000009}
 .day{font-size:12px;font-weight:800;color:var(--green);letter-spacing:.3px}.session{font-size:13px;color:var(--muted);margin-top:3px}.exercise{font-size:27px;font-weight:800;margin:7px 0}.tip{min-height:42px;color:var(--muted);font-size:14px;line-height:1.45}
 .timer{text-align:center;font-size:74px;font-variant-numeric:tabular-nums;letter-spacing:-4px;margin:13px 0 8px}.bar{height:8px;background:var(--line);border-radius:20px;overflow:hidden}.fill{height:100%;width:0;background:var(--green);transition:width .2s}
@@ -28,7 +28,13 @@ body{padding-bottom:env(safe-area-inset-bottom)}button{font:inherit}
 </head>
 <body>
 <main class="app">
-<header class="head"><div><div class="eyebrow">สำหรับอิมโดยเฉพาะ</div><h1>IM Pilates</h1></div><div class="pill">28 DAYS</div></header>
+<header class="head">
+<div class="brand">
+<img class="brand-logo" src="apple-touch-icon.png" alt="IM Pilates logo">
+<div><div class="eyebrow">สำหรับอิมโดยเฉพาะ</div><h1>IM Pilates</h1></div>
+</div>
+<div class="pill">28 DAYS</div>
+</header>
 
 <section class="card">
 <div class="day" id="dayLabel"></div><div class="session" id="session"></div>
