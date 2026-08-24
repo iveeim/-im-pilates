@@ -39,6 +39,9 @@ button:active{transform:scale(.98)}
 .name{flex:1;font-weight:750}
 .name small{display:block;color:var(--muted);font-weight:500;margin-top:3px}
 .tip{background:#f3eee8;border-radius:18px;padding:14px 16px;color:#625c57;line-height:1.65;margin-top:12px}
+.day-dot{aspect-ratio:1;border-radius:12px;border:1px solid var(--line);background:#f8f4ef;display:grid;place-items:center;font-size:12px;font-weight:750;color:var(--muted)}
+.day-dot.done{background:var(--sage);border-color:var(--sage);color:white}
+.day-dot.today{outline:2px solid #c7d1c2;outline-offset:1px}
 .notice{text-align:center;color:var(--muted);font-size:13px;line-height:1.5;margin-top:15px}
 @media(max-width:390px){.timer{font-size:54px}.badge{display:none}}
 </style>
@@ -50,6 +53,17 @@ button:active{transform:scale(.98)}
   <div><p>สำหรับอิมโดยเฉพาะ</p><h1>IM Pilates</h1></div>
   <div class="badge">DAY 1</div>
 </header>
+
+<section class="card" style="padding:16px 18px">
+  <div style="display:flex;justify-content:space-between;align-items:end;gap:10px">
+    <div>
+      <div style="font-size:13px;color:var(--muted)">ความคืบหน้า 28 วัน</div>
+      <div style="font-size:24px;font-weight:800"><span id="daysDone">0</span> / 28 วัน</div>
+    </div>
+    <div id="streakText" style="font-weight:750;color:var(--sage)">🔥 ต่อเนื่อง 0 วัน</div>
+  </div>
+  <div id="dayDots" style="display:grid;grid-template-columns:repeat(7,1fr);gap:7px;margin-top:13px"></div>
+</section>
 
 <section class="card hero">
   <div class="heart">♡</div>
@@ -77,7 +91,7 @@ button:active{transform:scale(.98)}
   <div id="list"></div>
 </section>
 
-<p class="notice">วางโทรศัพท์ไว้ข้างเสื่อได้เลยนะคะ ฉันจะบอกชื่อท่าและคอยบอกจังหวะให้ฟังระหว่างทำ</p>
+<p class="notice">วางโทรศัพท์ไว้ข้างเสื่อได้เลยนะคะ ฉันจะบอกชื่อท่า วิธีทำ และคอยบอกจังหวะให้ฟังระหว่างทำ · กดข้ามไม่ถือว่าทำนะคะ</p>
 </div>
 
 <script>
@@ -99,9 +113,39 @@ const exercises=[
   voice:"ท่าสุดท้ายของชุดนี้คือ Bird Dog ค่ะ ตั้งสี่จุด มืออยู่ใต้ไหล่ เข่าอยู่ใต้สะโพก แล้วเหยียดแขนกับขาตรงข้ามออกไปพร้อมกัน ค่อย ๆ ทำและรักษาลำตัวให้นิ่งนะคะ เก่งมากค่ะ ใกล้จบแล้ว"}
 ];
 
-let idx=0, remaining=60, running=false, timerId=null, voiceEnabled=true;
+let idx=0, remaining=60, running=false, timerId=null, voiceEnabled=true, completedExercises=new Set();
 
 const $=id=>document.getElementById(id);
+
+const STORAGE_KEY="imPilates28Progress_v1";
+let progress=JSON.parse(localStorage.getItem(STORAGE_KEY)||'{"days":[],"currentStreak":0,"lastCompletedDay":0}');
+progress.days=Array.isArray(progress.days)?progress.days:[];
+function saveProgress(){localStorage.setItem(STORAGE_KEY,JSON.stringify(progress));}
+function renderProgress(){
+  const doneCount=progress.days.length;
+  $("daysDone").textContent=doneCount;
+  $("streakText").textContent=`🔥 ต่อเนื่อง ${progress.currentStreak} วัน`;
+  const wrap=$("dayDots"); wrap.innerHTML="";
+  for(let d=1;d<=28;d++){
+    const b=document.createElement("div");
+    b.className="day-dot"+(progress.days.includes(d)?" done":"")+(d===1?" today":"");
+    b.textContent=progress.days.includes(d)?"✓":d;
+    wrap.appendChild(b);
+  }
+}
+function markDayComplete(dayNumber){
+  if(!progress.days.includes(dayNumber)){
+    progress.days.push(dayNumber);
+    progress.days.sort((a,b)=>a-b);
+    if(progress.lastCompletedDay===dayNumber-1 || progress.lastCompletedDay===0) progress.currentStreak++;
+    else if(progress.lastCompletedDay!==dayNumber) progress.currentStreak=1;
+    progress.lastCompletedDay=dayNumber;
+    saveProgress();
+    renderProgress();
+    speak(`ครบ Day ${dayNumber} แล้วค่ะ เก่งมากนะคะ วันนี้ทำสำเร็จอีกหนึ่งวันแล้ว`);
+  }
+}
+
 function render(){
  const e=exercises[idx];
  $("title").textContent=e.name;
@@ -116,6 +160,34 @@ function updateTimer(){
  $("timer").textContent=`${String(Math.floor(remaining/60)).padStart(2,"0")}:${String(remaining%60).padStart(2,"0")}`;
  $("bar").style.width=`${((60-remaining)/60)*100}%`;
 }
+let audioCtx=null;
+function initAudio(){
+ try{
+   if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+   if(audioCtx.state==="suspended") audioCtx.resume();
+ }catch(e){}
+}
+function beep(freq=880,duration=.09,volume=.045){
+ if(!audioCtx) return;
+ try{
+   const osc=audioCtx.createOscillator();
+   const gain=audioCtx.createGain();
+   osc.type="sine";
+   osc.frequency.value=freq;
+   gain.gain.setValueAtTime(0.0001,audioCtx.currentTime);
+   gain.gain.exponentialRampToValueAtTime(volume,audioCtx.currentTime+.01);
+   gain.gain.exponentialRampToValueAtTime(0.0001,audioCtx.currentTime+duration);
+   osc.connect(gain); gain.connect(audioCtx.destination);
+   osc.start(); osc.stop(audioCtx.currentTime+duration+.02);
+ }catch(e){}
+}
+function countdownBeep(secondsLeft){
+ if(secondsLeft<=10 && secondsLeft>=1){
+   // นับถอยหลัง 10 วินาทีสุดท้ายด้วยเสียงติ๊ดเบา ๆ
+   beep(secondsLeft===1 ? 1040 : 820, secondsLeft===1 ? .16 : .08,
+        secondsLeft===1 ? .06 : .04);
+ }
+}
 function speak(text){
  if(!voiceEnabled || !("speechSynthesis" in window)) return;
  speechSynthesis.cancel();
@@ -125,27 +197,46 @@ function speak(text){
 }
 function start(){
  if(running) return;
+ initAudio();
  running=true;
  speak(exercises[idx].voice);
  timerId=setInterval(()=>{
    remaining--;
    updateTimer();
+   countdownBeep(remaining);
    if(remaining<=0){
      clearInterval(timerId); timerId=null; running=false;
-     if(idx<exercises.length-1){
+     completedExercises.add(idx);
+     if(completedExercises.size===exercises.length){
+       markDayComplete(1);
+       speak("ครบทั้งห้าท่าแล้วค่ะ เก่งมากนะคะ วันนี้ทำ Day 1 สำเร็จแล้ว ค่อย ๆ หายใจ แล้วพักได้เลย");
+     } else if(idx<exercises.length-1){
        idx++; render(); setTimeout(start,700);
-     }else{
-       speak("ครบทั้งห้าท่าแล้วค่ะ เก่งมากนะคะ ค่อย ๆ หายใจ แล้วพักได้เลย");
+     } else {
+       // If the last exercise was completed but some earlier exercise was skipped,
+       // stop here; the day is NOT marked complete until all exercises are finished.
+       speak("ท่านี้เสร็จแล้วค่ะ ยังมีบางท่าที่เราข้ามไว้ ถ้าอยากให้ Day นี้ครบ กลับไปทำท่าที่ข้ามได้เลยนะคะ");
      }
    }
  },1000);
 }
 function pause(){running=false;clearInterval(timerId);timerId=null;speechSynthesis?.pause()}
-function skip(){clearInterval(timerId);timerId=null;running=false;if(idx<exercises.length-1){idx++;render()}else{idx=0;render()}}
+function skip(){
+  initAudio();
+  const wasRunning=running;
+  clearInterval(timerId); timerId=null; running=false;
+  if(idx<exercises.length-1){
+    idx++;
+  }else{
+    idx=0;
+  }
+  render();
+  if(wasRunning) setTimeout(start,250);
+}
 $("start").onclick=start;
 $("pause").onclick=pause;
 $("skip").onclick=skip;
-$("repeat").onclick=()=>speak(exercises[idx].voice);
+$("repeat").onclick=()=>{initAudio();speak(exercises[idx].voice)};
 $("voiceOn").onclick=()=>{
  voiceEnabled=!voiceEnabled;
  $("voiceOn").textContent=voiceEnabled?"🔈 เสียงโค้ช: เปิด":"🔇 เสียงโค้ช: ปิด";
@@ -155,10 +246,11 @@ const list=$("list");
 exercises.forEach((e,i)=>{
  const row=document.createElement("div"); row.className="exercise";
  row.innerHTML=`<div class="num">${i+1}</div><img class="thumb" src="./${e.img}" alt=""><div class="name">${e.name}<small>1:00</small></div>`;
- row.onclick=()=>{clearInterval(timerId);timerId=null;running=false;idx=i;render()};
+ row.onclick=()=>{clearInterval(timerId);timerId=null;running=false;idx=i;render();};
  list.appendChild(row);
 });
 render();
+renderProgress();
 </script>
 </body>
 </html>
