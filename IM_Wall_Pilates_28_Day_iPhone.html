@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="IM Pilates">
+<title>IM Pilates · 28 Days</title>
+<style>
+:root{--bg:#f7f2ed;--card:#fffdf9;--ink:#403b37;--muted:#8d847c;--green:#879783;--green2:#aab7a6;--line:#e7ded6;--peach:#ead5c5}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif}
+body{padding-bottom:env(safe-area-inset-bottom)}button{font:inherit}
+.app{width:min(100%,520px);margin:auto;padding:18px 16px 32px}.head{display:flex;justify-content:space-between;align-items:center}.eyebrow{font-size:12px;color:var(--muted)}h1{font-size:26px;margin:4px 0 0}.pill{padding:8px 10px;border-radius:14px;background:#eee8e1;font-size:12px;font-weight:700}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:18px;margin-top:15px;box-shadow:0 10px 30px #00000009}
+.day{font-size:12px;font-weight:800;color:var(--green);letter-spacing:.3px}.session{font-size:13px;color:var(--muted);margin-top:3px}.exercise{font-size:27px;font-weight:800;margin:7px 0}.tip{min-height:42px;color:var(--muted);font-size:14px;line-height:1.45}
+.timer{text-align:center;font-size:74px;font-variant-numeric:tabular-nums;letter-spacing:-4px;margin:13px 0 8px}.bar{height:8px;background:var(--line);border-radius:20px;overflow:hidden}.fill{height:100%;width:0;background:var(--green);transition:width .2s}
+.controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:15px}.btn{border:0;border-radius:15px;padding:13px 8px;background:#eee7e0;font-weight:750;color:var(--ink)}.primary{background:var(--green);color:white}.next{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:12px}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:11px}.daybtn{border:0;border-radius:10px;padding:9px 2px;background:#eee7e0;color:var(--ink);font-weight:700}.daybtn.today{background:var(--green);color:white}.daybtn.done{box-shadow:inset 0 0 0 2px var(--green2)}
+.info{font-size:13px;color:var(--muted);line-height:1.55}.info ul{margin:9px 0 0;padding-left:18px}.info li{margin:4px 0}.note{background:#f3eee8;border-radius:15px;padding:12px;margin-top:12px;font-size:12px;line-height:1.5;color:#766e68}
+.hidden{display:none}.complete{text-align:center;padding:7px 0}.complete b{font-size:20px}.install{font-size:13px;line-height:1.55}.install strong{color:var(--ink)}
+</style>
+</head>
+<body>
+<main class="app">
+<header class="head"><div><div class="eyebrow">สำหรับอิมโดยเฉพาะ</div><h1>IM Pilates</h1></div><div class="pill">28 DAYS</div></header>
+
+<section class="card">
+<div class="day" id="dayLabel"></div><div class="session" id="session"></div>
+<div class="exercise" id="exercise">พร้อมเริ่ม</div><div class="tip" id="tip"></div>
+<div class="timer" id="timer">00:00</div><div class="bar"><div class="fill" id="fill"></div></div>
+<div class="controls">
+<button class="btn primary" id="start">เริ่ม</button><button class="btn" id="pause">พัก</button><button class="btn" id="skip">ข้าม</button>
+</div>
+<div class="next"><span id="step"></span><span id="next"></span></div>
+</section>
+
+<section class="card"><b>เลือกวัน</b><div class="days" id="days"></div></section>
+<section class="card"><b id="planTitle"></b><div class="info" id="planInfo"></div></section>
+
+<section class="card install">
+<b>📱 ถ้าจะใช้เหมือนแอปบน iPhone</b>
+<p>หลังเปิดไฟล์นี้ใน Safari ให้กด <strong>แชร์ → เพิ่มไปยังหน้าจอโฮม (Add to Home Screen)</strong> แล้วเปิดจากไอคอน <strong>IM Pilates</strong> ได้เลย</p>
+<p>ถ้า Safari ไม่แสดงตัวเลือกนี้ ให้เปิดไฟล์จากแอป <strong>ไฟล์ (Files)</strong> แล้วเลือกแชร์/เปิดด้วย Safari ก่อน</p>
+</section>
+
+<div class="note">⚠️ โปรแกรมนี้เป็นต้นแบบการออกกำลังระดับเบา–ปานกลาง ไม่ใช่การรักษา หากมีอาการปวดร้าว ชา อ่อนแรง เวียนศีรษะ หรืออาการหลัง/ขารุนแรงขึ้น ให้หยุดและปรึกษาผู้เชี่ยวชาญ</div>
+</main>
+
+<script>
+const D={
+1:["Foundation Full Body",[["หายใจ + ขยับไหล่",45,"หายใจช้า ๆ ปล่อยไหล่ลง"],["Wall Pelvic Tilt",45,"ขยับนุ่ม ๆ ไม่กดหลังแรง"],["Wall Sit — เบา",30,"ลงเพียงเล็กน้อย"],["พัก",20,"ผ่อนขา"],["Glute Bridge",45,"บีบก้นเบา ๆ ไม่แอ่นหลัง"],["Dead Bug — ง่าย",45,"ขยับช้า หายใจตามปกติ"],["Wall Calf Raise",45,"จับกำแพงช่วยทรงตัว"],["พัก",20,"คลายไหล่และขา"],["Bird-Dog — แยกแขน/ขา",45,"เริ่มทีละข้าง รักษาลำตัวนิ่ง"],["Wall Chest Opener",45,"เปิดอกเบา ๆ"],["เดิน + หายใจ",60,"เดินสบาย ๆ ก่อนจบ"]]],
+2:["Mobility & Right-Side Release",[["หายใจ 360°",60,"หายใจรอบลำตัว"],["หมุนคอเบา ๆ",40,"เฉพาะช่วงที่สบาย"],["Shoulder Roll",40,"หมุนช้า ๆ"],["พัก",20,"ยืนสบาย"],["Cat-Cow ช่วงสั้น",50,"ไม่โยกแรง"],["Hip Shift เบา ๆ",50,"ถ่ายน้ำหนักช้า ๆ"],["Wall Hip Hinge",50,"พับจากสะโพก หลังเป็นธรรมชาติ"],["พัก",20,"เดินเบา ๆ"],["Figure-4 Stretch",50,"ด้านขวาไม่ต้องฝืน"],["Calf Stretch",50,"ตึงได้แต่ไม่เจ็บ"],["หายใจ + เดิน",60,"คลายตัว"]]],
+3:["Back + Core",[["หายใจ + เกร็งท้องเบา ๆ",50,"หายใจได้ตามปกติ"],["Wall Dead Bug",45,"ควบคุมเชิงกราน"],["Glute Bridge",50,"ใช้ก้น ไม่ใช้หลังยก"],["พัก",20,"คลายตัว"],["Bird-Dog สลับข้าง",50,"ลำตัวนิ่ง"],["Wall Row Isometric",45,"ศอกถอยหลัง ไม่ยกไหล่"],["Wall Squat — ตื้น",40,"ลงเท่าที่สบาย"],["พัก",20,"หายใจ"],["Heel Raise",40,"ขึ้นลงช้า"],["Wall Chest Opener",45,"ไม่แอ่นเอว"],["หายใจ + คลายหลัง",60,"จบเบา ๆ"]]],
+4:["Lower Body — Gentle",[["เดินอยู่กับที่",60,"ก้าวเล็ก ๆ"],["Wall Sit — ตื้น",35,"ไม่ต้องลงลึก"],["พัก",20,"คลายขา"],["Glute Bridge",50,"เน้นก้น"],["Side Leg Lift — ซ้าย",40,"ลำตัวนิ่ง"],["Side Leg Lift — ขวา",40,"ลดระยะถ้าขวาตึง"],["พัก",20,"ขยับข้อเท้า"],["Wall Hip Abduction — ซ้าย",40,"จับกำแพง"],["Wall Hip Abduction — ขวา",40,"ไม่ต้องยกสูง"],["Wall Calf Raise",45,"ช้าและสม่ำเสมอ"],["เดิน + หายใจ",60,"จบเบา ๆ"]]],
+5:["Upper Body + Posture",[["หายใจ + Shoulder Roll",60,"ผ่อนกรามและไหล่"],["Wall Angel — สั้น",45,"ไม่ฝืนไหล่"],["Wall Push-Up",45,"ลำตัวเป็นเส้นเดียว"],["พัก",20,"ผ่อนแขน"],["Wall Row Isometric",45,"ศอกถอยหลัง"],["Wall Chest Opener",45,"ไม่แอ่นเอว"],["Bird-Dog",45,"เน้นความนิ่ง"],["พัก",20,"หายใจ"],["Dead Bug — เบา",45,"ขยับทีละส่วน"],["Wall Sit — ตื้น",35,"ไม่ต้องลงลึก"],["เดิน + หายใจ",60,"คลายตัว"]]],
+6:["Full Body + Light Dumbbell",[["เดินอยู่กับที่",60,"เตรียมร่างกาย"],["Dumbbell Row — ซ้าย",40,"ใช้ดัมเบลเบามาก"],["Dumbbell Row — ขวา",40,"ไม่บิดตัว; ถ้าขวาตึงให้ข้าม"],["พัก",20,"วางดัมเบล"],["Wall Squat — ตื้น",40,"เข่าและเท้าแนวเดียวกัน"],["Glute Bridge",45,"บีบก้นเบา ๆ"],["Wall Push-Up",45,"ควบคุมช่วงลง"],["พัก",20,"หายใจ"],["Dumbbell Biceps Curl",45,"ไหล่ต่ำ ข้อมือตรง"],["Wall Calf Raise",45,"ช้า ๆ"],["หายใจ + เดิน",60,"จบเซสชัน"]]],
+7:["Recovery + Reset",[["หายใจ 360°",60,"ผ่อนท้องและไหล่"],["เดินช้า ๆ",60,"ก้าวสบาย ๆ"],["Shoulder Roll",45,"ขยับช่วงบน"],["พัก",20,"หายใจ"],["Cat-Cow ช่วงสั้น",50,"นุ่มนวล"],["Hip Hinge ที่กำแพง",50,"พับจากสะโพก"],["Calf Stretch",45,"ไม่ฝืน"],["พัก",20,"เดินเบา ๆ"],["Figure-4 Stretch",50,"ข้างขวาลดระยะได้"],["Wall Chest Opener",45,"เปิดอกเบา ๆ"],["หายใจ + เดิน",60,"จบสัปดาห์"]]]
+};
+for(let d=8;d<=28;d++)D[d]=["กำลังพัฒนา",[]];
+
+let day=1,i=-1,left=0,running=false,tick=null, audioCtx=null;
+const $=id=>document.getElementById(id);
+function total(){return D[day][1].reduce((a,x)=>a+x[1],0)}
+function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
+function beep(freq=720,dur=.08){try{audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=freq;g.gain.value=.04;o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+dur)}catch(e){}}
+function render(){let dur=i>=0?D[day][1][i][1]:total();$("timer").textContent=fmt(left);$("fill").style.width=i>=0?((dur-left)/dur*100)+"%":"0%"}
+function ready(){pause();i=-1;left=total();let x=D[day];$("dayLabel").textContent=`DAY ${day} / 28`;$("session").textContent=x[0];$("exercise").textContent=x[1].length?"พร้อมเริ่ม":"กำลังพัฒนา";$("tip").textContent=x[1].length?`เซสชันประมาณ 15 นาที · ${x[1].length} ช่วง`:"เราจะเติมหลังจากทดลอง 7 วันแรก";$("step").textContent=x[1].length?`${x[1].length} ช่วง`:"—";$("next").textContent="กดเริ่ม";$("planTitle").textContent=`Day ${day} — ${x[0]}`;$("planInfo").innerHTML=x[1].length?"<ul>"+x[1].map(a=>`<li><b>${a[0]}</b> · ${a[1]} วินาที</li>`).join("")+"</ul>":"Day นี้ยังไม่เปิดใช้งาน";render()}
+function load(){let x=D[day][1][i];left=x[1];$("exercise").textContent=x[0];$("tip").textContent=x[2];$("step").textContent=`ช่วง ${i+1} / ${D[day][1].length}`;$("next").textContent=i<D[day][1].length-1?"ถัดไป — "+D[day][1][i+1][0]:"ช่วงสุดท้าย";render()}
+function start(){if(!D[day][1].length){alert("ตอนนี้มีโปรแกรม Day 1–7 ก่อนนะ 💗");return}if(running)return;audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();if(i<0){i=0;load()}beep();running=true;clearInterval(tick);tick=setInterval(()=>{left--;render();if(left<=0){beep(900,.09);if(i<D[day][1].length-1){i++;load()}else{pause();localStorage.setItem("imDone"+day,"1");document.querySelectorAll(".daybtn")[day-1].classList.add("done");$("exercise").textContent="จบแล้ว 🎉";$("tip").textContent="วันนี้ทำได้ดีมาก พัก ดื่มน้ำ และสังเกตร่างกาย";$("next").textContent="พร้อมสำหรับวันถัดไป"}}},1000)}
+function pause(){running=false;clearInterval(tick)}
+function skip(){if(i<0){start();return}if(i<D[day][1].length-1){beep(600);i++;load()}else{left=0;render()}}
+function selectDay(d){day=d;ready();document.querySelectorAll(".daybtn").forEach((b,n)=>b.classList.toggle("today",n===d-1))}
+for(let d=1;d<=28;d++){let b=document.createElement("button");b.className="daybtn";b.textContent=d;b.onclick=()=>selectDay(d);$("days").appendChild(b);if(localStorage.getItem("imDone"+d)==="1")b.classList.add("done")}
+$("start").onclick=start;$("pause").onclick=pause;$("skip").onclick=skip;selectDay(1);
+</script>
+</body>
+</html>
