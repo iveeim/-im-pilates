@@ -146,25 +146,99 @@ const dayTitles=[
 let day=1,current=0,remaining=60,running=false,voiceOn=true,timerId=null;
 
 function art(type){
- const common=`<svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg">
- <rect width="520" height="300" rx="24" fill="#f8f4ee"/>
- <path d="M70 240 Q260 215 450 240" fill="none" stroke="#ded7cf" stroke-width="5" stroke-linecap="round"/>`;
- const skin="#e9c5a6", hair="#806b5b", shirt="#8f9d8a", pants="#707c68", line="#4b4945";
- const head=(x,y)=>`<circle cx="${x}" cy="${y}" r="25" fill="${skin}" stroke="${line}" stroke-width="4"/><path d="M${x-25} ${y-5}q8-34 35-13" fill="none" stroke="${hair}" stroke-width="10" stroke-linecap="round"/>`;
- const end=`</svg>`;
+ const common=`<svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg" aria-label="ภาพท่าออกกำลังกาย">
+   <rect width="520" height="300" rx="24" fill="#f8f4ee"/>
+   <path d="M62 238 Q260 220 458 238" fill="none" stroke="#ddd6cc" stroke-width="5" stroke-linecap="round"/>
+   <g stroke="#4a4844" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+ `;
+ const skin="#e8c4a5", hair="#756456", shirt="#a4b19d", pants="#7d8974", accent="#d8dfd3";
+ const head=(x,y,flip=false)=>`
+   <circle cx="${x}" cy="${y}" r="23" fill="${skin}"/>
+   <path d="M${x-22} ${y-5}q5-31 29-25q16 5 18 22q-8-10-18-12q-13 1-29 15" fill="${hair}" stroke="none"/>
+   <circle cx="${x-7}" cy="${y+2}" r="2.4" fill="#4a4844" stroke="none"/>
+   <circle cx="${x+8}" cy="${y+2}" r="2.4" fill="#4a4844" stroke="none"/>
+   <path d="M${x-6} ${y+10}q6 6 12 0" fill="none"/>
+ `;
+ const bodyTop=(x,y,w=52,h=55)=>`
+   <path d="M${x-w/2} ${y}q${w/2} 12 ${w/2} 0l10 ${h-10}q-${w/2+10} 18 -${w/2+20} 0z" fill="${shirt}"/>
+ `;
+ const limb=(d,color=pants,sw=16)=>`<path d="${d}" fill="none" stroke="${color}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round"/>`;
+ const end=`</g>
+   <g fill="#aab5a4"><circle cx="427" cy="57" r="5"/><circle cx="447" cy="76" r="3"/><circle cx="409" cy="78" r="2"/></g>
+ </svg>`;
  let body="";
- if(type==="breath") body=`${head(265,95)}<path d="M245 120q20 15 40 0l35 60q-55 35-110 0z" fill="${shirt}" stroke="${line}" stroke-width="4"/><path d="M245 132l-45 45M285 132l45 45M235 178l-55 35M295 178l55 35" fill="none" stroke="${shirt}" stroke-width="12" stroke-linecap="round"/><path d="M145 105q-25 25 0 50M375 105q25 25 0 50" fill="none" stroke="#aab6a3" stroke-width="5"/>`;
- if(type==="pelvic") body=`${head(150,175)}<path d="M170 185q65-28 120 0l55 30" fill="none" stroke="${shirt}" stroke-width="18" stroke-linecap="round"/><path d="M205 185q15 35 40 48M275 185q-5 30-25 48" fill="none" stroke="${pants}" stroke-width="18" stroke-linecap="round"/><path d="M320 215l70 0" stroke="${pants}" stroke-width="18" stroke-linecap="round"/>`;
- if(type==="deadbug") body=`${head(185,120)}<path d="M205 135q55-30 95 5" fill="none" stroke="${shirt}" stroke-width="20" stroke-linecap="round"/><path d="M225 140l-20-55M250 140l35-55M285 145l70-35M285 150l75 45" fill="none" stroke="${pants}" stroke-width="18" stroke-linecap="round"/><path d="M225 140l-15-55M250 140l35-55" fill="none" stroke="${skin}" stroke-width="13" stroke-linecap="round"/>`;
- if(type==="bridge") body=`${head(160,205)}<path d="M185 205q75-65 155 0" fill="none" stroke="${shirt}" stroke-width="20" stroke-linecap="round"/><path d="M335 205l55 30M390 235l35 0M250 205l-20 35M230 240l-35 0" fill="none" stroke="${pants}" stroke-width="18" stroke-linecap="round"/>`;
- if(type==="birddog") body=`${head(260,105)}<path d="M235 125l-30 60M285 125l35 60" stroke="${shirt}" stroke-width="18" stroke-linecap="round"/><path d="M205 180l-80 30M320 180l90-30M205 180l-20 50M320 180l20 50" fill="none" stroke="${pants}" stroke-width="18" stroke-linecap="round"/>`;
- if(type==="catcow") body=`${head(260,120)}<path d="M235 135q25 35 60 0" fill="none" stroke="${shirt}" stroke-width="18" stroke-linecap="round"/><path d="M235 140l-75 55M295 140l75 55M160 195l-20 35M370 195l20 35" fill="none" stroke="${pants}" stroke-width="18" stroke-linecap="round"/>`;
- if(type==="side") body=`${head(160,170)}<path d="M185 180q65-25 140 5" fill="none" stroke="${shirt}" stroke-width="20" stroke-linecap="round"/><path d="M315 185l100-65M315 190l105 65" fill="none" stroke="${pants}" stroke-width="18" stroke-linecap="round"/>`;
- if(type==="clamshell") body=`${head(150,190)}<path d="M175 195q60-35 125 5" fill="none" stroke="${shirt}" stroke-width="20" stroke-linecap="round"/><path d="M290 200q40-65 85-10M290 205q40 30 85 30" fill="none" stroke="${pants}" stroke-width="18" stroke-linecap="round"/>`;
- if(type==="twist") body=`${head(260,95)}<path d="M245 120q15 30 0 75M275 120q-15 30 0 75" fill="none" stroke="${shirt}" stroke-width="18" stroke-linecap="round"/><path d="M250 150l-90-35M270 150l90-35M250 195l-35 45M270 195l35 45" fill="none" stroke="${pants}" stroke-width="18" stroke-linecap="round"/>`;
- if(type==="rolldown") body=`${head(275,70)}<path d="M260 95q-10 60 35 100" fill="none" stroke="${shirt}" stroke-width="20" stroke-linecap="round"/><path d="M295 190l-55 45M295 190l65 45M240 235l-20 0M360 235l20 0" fill="none" stroke="${pants}" stroke-width="18" stroke-linecap="round"/>`;
- if(type==="stretch") body=`${head(255,95)}<path d="M240 120q20 25 50 0" fill="none" stroke="${shirt}" stroke-width="20" stroke-linecap="round"/><path d="M260 135l-70 80M280 135l70 80M190 215l-55 0M350 215l55 0" fill="none" stroke="${pants}" stroke-width="18" stroke-linecap="round"/>`;
- return common+body+`<circle cx="420" cy="55" r="5" fill="#aab6a3"/><circle cx="440" cy="75" r="3" fill="#aab6a3"/>`+end;
+
+ if(type==="breath"){
+   body=`${head(260,88)}${bodyTop(260,112,78,62)}
+     ${limb("M236 122Q210 145 190 171",skin,12)}${limb("M284 122Q310 145 330 171",skin,12)}
+     ${limb("M242 164Q215 184 185 197",pants,16)}${limb("M278 164Q305 184 335 197",pants,16)}
+     <path d="M155 91q-25 22 0 44M365 91q25 22 0 44" fill="none" stroke="${accent}" stroke-width="6"/>
+     <path d="M168 79q-12-14-1-28M352 79q12-14 1-28" fill="none" stroke="${accent}" stroke-width="4"/>`;
+ }
+ if(type==="pelvic"){
+   body=`${head(130,174)}${limb("M154 184Q205 156 262 180Q300 197 337 215",shirt,20)}
+     ${limb("M195 177Q214 204 244 215",pants,18)}${limb("M270 188Q264 212 250 226",pants,18)}
+     ${limb("M337 215L401 215",pants,18)}
+     <path d="M205 164q18 8 34 0M206 177q15 8 28 2" fill="none" stroke="#87937f" stroke-width="3"/>`;
+ }
+ if(type==="deadbug"){
+   body=`${head(150,127)}${limb("M173 137Q216 111 260 132",shirt,21)}
+     ${limb("M195 132L174 79",skin,12)}${limb("M222 125L258 72",skin,12)}
+     ${limb("M252 136L320 102",pants,17)}${limb("M252 142L326 181",pants,17)}
+     <path d="M174 79q-4-10 2-18M258 72q8-8 15-2" fill="none" stroke="${hair}" stroke-width="6"/>`;
+ }
+ if(type==="bridge"){
+   body=`${head(120,206)}${limb("M145 204Q198 158 260 171Q303 181 335 211",shirt,21)}
+     ${limb("M335 211L390 238",pants,18)}${limb("M390 238L426 238",pants,18)}
+     ${limb("M260 174L238 238",pants,18)}${limb("M238 238L204 238",pants,18)}
+     <path d="M175 183q60-31 112 0" fill="none" stroke="${accent}" stroke-width="4"/>`;
+ }
+ if(type==="birddog"){
+   body=`${head(260,105)}${bodyTop(260,127,62,45)}
+     ${limb("M238 137L207 184",shirt,16)}${limb("M282 137L316 184",shirt,16)}
+     ${limb("M207 184L130 207",pants,17)}${limb("M316 184L406 151",pants,17)}
+     ${limb("M207 184L186 228",pants,17)}${limb("M316 184L338 228",pants,17)}
+     <path d="M406 151l12-5M130 207l-10 2" fill="none" stroke="${pants}" stroke-width="10"/>`;
+ }
+ if(type==="catcow"){
+   body=`${head(260,112)}${bodyTop(260,132,58,40)}
+     ${limb("M238 140Q204 156 168 190",pants,17)}${limb("M282 140Q318 156 352 190",pants,17)}
+     ${limb("M168 190L146 230",pants,17)}${limb("M352 190L374 230",pants,17)}
+     <path d="M190 174Q260 205 330 174" fill="none" stroke="${shirt}" stroke-width="18"/>
+     <path d="M210 160q18 10 34 0M310 160q-18 10-34 0" fill="none" stroke="${accent}" stroke-width="4"/>`;
+ }
+ if(type==="side"){
+   body=`${head(130,178)}${limb("M153 183Q220 163 294 185",shirt,21)}
+     ${limb("M286 184L408 126",pants,18)}${limb("M288 189L408 238",pants,18)}
+     <path d="M188 174q45-14 87 2" fill="none" stroke="${accent}" stroke-width="4"/>
+     <path d="M404 126l13-2M408 238l13 2" fill="none" stroke="${pants}" stroke-width="9"/>`;
+ }
+ if(type==="clamshell"){
+   body=`${head(125,195)}${limb("M151 199Q205 171 273 198",shirt,21)}
+     ${limb("M273 198Q320 142 373 183",pants,18)}${limb("M273 202Q321 225 374 238",pants,18)}
+     <path d="M282 194q30-31 62-14" fill="none" stroke="${accent}" stroke-width="4"/>`;
+ }
+ if(type==="twist"){
+   body=`${head(260,82)}${bodyTop(260,108,64,62)}
+     ${limb("M245 124L168 91",skin,12)}${limb("M275 124L352 91",skin,12)}
+     ${limb("M245 170L205 232",pants,18)}${limb("M275 170L315 232",pants,18)}
+     <path d="M233 139Q260 153 287 139" fill="none" stroke="${accent}" stroke-width="5"/>
+     <path d="M168 91l-9-8M352 91l9-8" fill="none" stroke="${skin}" stroke-width="9"/>`;
+ }
+ if(type==="rolldown"){
+   body=`${head(272,70)}${limb("M260 93Q247 128 275 162Q300 190 318 201",shirt,20)}
+     ${limb("M318 201L258 236",pants,18)}${limb("M318 201L378 236",pants,18)}
+     ${limb("M258 236L224 236",pants,18)}${limb("M378 236L412 236",pants,18)}
+     <path d="M257 101q18 12 35 0M252 121q20 12 37 0M260 144q20 12 35 0" fill="none" stroke="${accent}" stroke-width="4"/>`;
+ }
+ if(type==="stretch"){
+   body=`${head(260,92)}${bodyTop(260,116,60,48)}
+     ${limb("M244 133L182 205",pants,18)}${limb("M276 133L338 205",pants,18)}
+     ${limb("M182 205L128 205",pants,18)}${limb("M338 205L392 205",pants,18)}
+     ${limb("M245 125L205 82",skin,12)}${limb("M275 125L315 82",skin,12)}
+     <path d="M196 83q9-18 18 0M304 83q11-18 20 0" fill="none" stroke="${accent}" stroke-width="5"/>`;
+ }
+ return common+body+end;
 }
 function dayData(){ return exercises.map((e,i)=>({...e,time: i===0?60:60})); }
 function renderDays(){
