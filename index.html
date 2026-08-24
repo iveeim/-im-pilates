@@ -55,7 +55,8 @@ button:active{transform:scale(.98)}
   <div class="heart">♡</div>
   <h2 id="title">Breathing Focus</h2>
   <p class="sub" id="subtitle">ค่อย ๆ ตั้งหลักให้ร่างกายพร้อม</p>
-  <img id="heroImg" src="01_breathing-focus.PNG" alt="Breathing Focus">
+  <img id="heroImg" src="./01_breathing-focus.PNG" alt="Breathing Focus" onerror="this.style.display='none';document.getElementById('imageError').style.display='block'">
+  <div id="imageError" style="display:none;padding:18px;text-align:center;color:#8f8983;background:#f4eee8;border-radius:16px;margin-top:10px">ภาพนี้ยังโหลดไม่ได้ค่ะ ลองรีเฟรชหน้าเว็บอีกครั้งนะคะ</div>
   <div class="timer" id="timer">01:00</div>
   <div class="progress"><i id="bar"></i></div>
   <div class="controls">
@@ -105,7 +106,7 @@ function render(){
  const e=exercises[idx];
  $("title").textContent=e.name;
  $("subtitle").textContent=e.sub;
- $("heroImg").src=e.img;
+ $("heroImg").style.display="block"; $("imageError").style.display="none"; $("heroImg").src="./"+e.img;
  $("heroImg").alt=e.name;
  $("tip").textContent=e.tip;
  remaining=60; updateTimer();
@@ -153,7 +154,7 @@ $("voiceOn").onclick=()=>{
 const list=$("list");
 exercises.forEach((e,i)=>{
  const row=document.createElement("div"); row.className="exercise";
- row.innerHTML=`<div class="num">${i+1}</div><img class="thumb" src="${e.img}" alt=""><div class="name">${e.name}<small>1:00</small></div>`;
+ row.innerHTML=`<div class="num">${i+1}</div><img class="thumb" src="./${e.img}" alt=""><div class="name">${e.name}<small>1:00</small></div>`;
  row.onclick=()=>{clearInterval(timerId);timerId=null;running=false;idx=i;render()};
  list.appendChild(row);
 });
