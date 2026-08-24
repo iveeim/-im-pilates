@@ -6,84 +6,372 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="IM Pilates">
-<title>IM Pilates · 28 Days</title>
+<title>IM Pilates · Day 1</title>
 <style>
-:root{--bg:#f7f2ed;--card:#fffdf9;--ink:#403b37;--muted:#8d847c;--green:#879783;--green2:#aab7a6;--line:#e7ded6;--peach:#ead5c5}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif}
-body{padding-bottom:env(safe-area-inset-bottom)}button{font:inherit}
-.app{width:min(100%,520px);margin:auto;padding:18px 16px 32px}.head{display:flex;justify-content:space-between;align-items:center}.brand{display:flex;align-items:center;gap:10px}.brand-logo{width:52px;height:52px;border-radius:15px;object-fit:cover;box-shadow:0 4px 12px #00000012}.eyebrow{font-size:12px;color:var(--muted)}h1{font-size:26px;margin:4px 0 0}.pill{padding:8px 10px;border-radius:14px;background:#eee8e1;font-size:12px;font-weight:700}
-.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:18px;margin-top:15px;box-shadow:0 10px 30px #00000009}
-.day{font-size:12px;font-weight:800;color:var(--green);letter-spacing:.3px}.session{font-size:13px;color:var(--muted);margin-top:3px}.exercise{font-size:27px;font-weight:800;margin:7px 0}.tip{min-height:42px;color:var(--muted);font-size:14px;line-height:1.45}
-.timer{text-align:center;font-size:74px;font-variant-numeric:tabular-nums;letter-spacing:-4px;margin:13px 0 8px}.bar{height:8px;background:var(--line);border-radius:20px;overflow:hidden}.fill{height:100%;width:0;background:var(--green);transition:width .2s}
-.controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:15px}.btn{border:0;border-radius:15px;padding:13px 8px;background:#eee7e0;font-weight:750;color:var(--ink)}.primary{background:var(--green);color:white}.next{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:12px}
-.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:11px}.daybtn{border:0;border-radius:10px;padding:9px 2px;background:#eee7e0;color:var(--ink);font-weight:700}.daybtn.today{background:var(--green);color:white}.daybtn.done{box-shadow:inset 0 0 0 2px var(--green2)}
-.info{font-size:13px;color:var(--muted);line-height:1.55}.info ul{margin:9px 0 0;padding-left:18px}.info li{margin:4px 0}.note{background:#f3eee8;border-radius:15px;padding:12px;margin-top:12px;font-size:12px;line-height:1.5;color:#766e68}
-.hidden{display:none}.complete{text-align:center;padding:7px 0}.complete b{font-size:20px}.install{font-size:13px;line-height:1.55}.install strong{color:var(--ink)}
-</style>
+:root{
+  --bg:#f7f2ed;--card:#fffdf9;--ink:#403b37;--muted:#8d847c;
+  --green:#879783;--green2:#aab7a6;--line:#e7ded6;--peach:#ead5c5;
+  --soft:#f1ebe5;--danger:#b86b62
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);
+font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif}
+body{padding-bottom:env(safe-area-inset-bottom)}
+button{font:inherit}
+.app{width:min(100%,560px);margin:auto;padding:16px 15px 34px}
+.head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-logo{width:54px;height:54px;border-radius:16px;object-fit:cover;box-shadow:0 5px 15px #00000012}
+.eyebrow{font-size:12px;color:var(--muted)}
+h1{font-size:27px;margin:2px 0 0;letter-spacing:-.6px}
+.pill{padding:9px 12px;border-radius:15px;background:#eee8e1;font-size:12px;font-weight:800}
+.card{background:var(--card);border:1px solid var(--line);border-radius:25px;padding:17px;margin-top:14px;box-shadow:0 10px 30px #00000008}
+.day{font-size:12px;font-weight:900;color:var(--green);letter-spacing:.5px}
+.session{font-size:13px;color:var(--muted);margin-top:3px}
+.exercise{font-size:28px;font-weight:850;margin:6px 0 2px;letter-spacing:-.5px}
+.timer{text-align:center;font-size:76px;font-variant-numeric:tabular-nums;letter-spacing:-4px;margin:5px 0 6px}
+.bar{height:8px;background:var(--line);border-radius:20px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--green);transition:width .2s}
+.controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px}
+.btn{border:0;border-radius:16px;padding:13px 8px;background:#eee7e0;font-weight:800;color:var(--ink)}
+.primary{background:var(--green);color:#fff}
+.subrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
+.smallbtn{border:1px solid var(--line);background:#fbf7f2;border-radius:14px;padding:10px 8px;font-weight:750;color:var(--ink)}
+.next{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--muted);margin-top:10px}
+.posebox{margin-top:12px;background:linear-gradient(180deg,#fcf8f3,#f5efe8);border-radius:20px;padding:10px 10px 4px;border:1px solid var(--line)}
+.pose{width:100%;height:215px;display:block}
+.pose-title{font-weight:850;font-size:13px;margin:4px 2px 10px}
+.guide h3{margin:0 0 7px;font-size:16px}
+.guide p,.guide li{font-size:13px;line-height:1.55}
+.guide ul{margin:6px 0 0;padding-left:19px}
+.warn{margin-top:11px;background:#f7eee5;border-radius:15px;padding:11px 12px;font-size:12px;line-height:1.5}
+.voice{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#f3eee8;border-radius:15px;padding:11px 12px;margin-top:12px}
+.voice b{font-size:13px}.voice span{font-size:11px;color:var(--muted)}
+.toggle{border:0;border-radius:20px;background:var(--green);color:#fff;padding:8px 12px;font-weight:800}
+.toggle.off{background:#d7d0ca;color:#5f5954}
+.modegrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}
+.mode{border:1px solid var(--line);background:#fbf7f2;border-radius:13px;padding:9px;font-size:12px}
+.mode.active{border-color:var(--green);box-shadow:inset 0 0 0 1px var(--green);background:#f3f6f1}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:11px}
+.daybtn{border:0;border-radius:10px;padding:9px 2px;background:#eee7e0;color:var(--ink);font-weight:800}
+.daybtn.today{background:var(--green);color:white}
+.daybtn.done{box-shadow:inset 0 0 0 2px var(--green2)}
+.exercise-list{display:grid;gap:7px;margin-top:10px}
+.exitem{display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:14px;padding:9px;background:#fcf8f3;text-align:left}
+.exitem.active{border-color:var(--green);background:#f2f5ef}
+.num{width:28px;height:28px;border-radius:50%;background:#ebe4dc;display:grid;place-items:center;font-weight:850;flex:0 0 auto}
+.exitem.active .num{background:var(--green);color:#fff}
+.exname{font-weight:750;font-size:12px;flex:1}.extime{font-size:11px;color:var(--muted)}
+.note{font-size:12px;color:#766e68;line-height:1.55;margin-top:13px}
+.donebox{text-align:center;padding:15px 8px;background:#f0f4ed;border-radius:17px;margin-top:12px}
+.donebox b{font-size:20px}.hidden{display:none}
+@media(min-width:520px){.app{padding-left:18px;padding-right:18px}}
 
+.guideBtn{margin-top:10px;border:1px solid var(--line);background:#f6f0e9;border-radius:14px;padding:10px 12px;font-weight:750;color:var(--ink);width:100%}
+.coach{display:flex;gap:8px;align-items:center;margin-top:9px}.coachToggle{flex:1}.voiceState{font-size:12px;color:var(--muted)}
+.modal{position:fixed;inset:0;background:#403b3755;display:none;align-items:flex-end;justify-content:center;padding:10px;z-index:30}.modal.show{display:flex}
+.sheet{width:min(100%,520px);max-height:88vh;overflow:auto;background:var(--card);border-radius:28px 28px 18px 18px;padding:18px;box-shadow:0 18px 60px #0003}
+.sheetHead{display:flex;justify-content:space-between;align-items:center}.xbtn{border:0;background:#eee7e0;border-radius:50%;width:38px;height:38px;font-size:22px}
+.pose{height:210px;border-radius:22px;background:#f5eee6;display:flex;align-items:center;justify-content:center;margin:12px 0}.pose svg{width:92%;height:92%}
+.howto{font-size:14px;line-height:1.55;color:#6f6862}.howto h3{margin:8px 0 4px;color:var(--ink);font-size:15px}.howto ul{margin:5px 0;padding-left:20px}
+.warning{background:#f3eee8;border-radius:15px;padding:11px;margin-top:10px;font-size:12px;line-height:1.5}.speakBtn{margin-top:12px;width:100%;border:0;border-radius:15px;background:var(--green);color:#fff;padding:13px;font-weight:800}
+
+/* IM Pilates v2 enhancements */
+.hero-note{margin-top:10px;padding:10px 12px;border-radius:15px;background:#f3f6f1;color:#657260;font-size:12px;line-height:1.5}
+.voiceModes{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:9px}
+.mode{cursor:pointer;text-align:center}
+.mode small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+.cue{margin-top:9px;padding:10px 12px;border-radius:14px;background:#fbf7f2;border:1px solid var(--line);font-size:12px;line-height:1.45}
+.cue b{display:block;font-size:11px;color:var(--green);margin-bottom:2px}
+.posebox{position:relative}
+.poseBadge{position:absolute;right:10px;top:10px;background:#fffdf9cc;border:1px solid var(--line);padding:6px 9px;border-radius:12px;font-size:10px;font-weight:800;color:var(--muted)}
+.miniPose{width:58px;height:42px;flex:0 0 58px;border-radius:10px;overflow:hidden;background:#f5efe8}.miniPose svg{width:100%;height:100%}.tipline{display:flex;gap:8px;align-items:flex-start;margin-top:9px;font-size:12px;line-height:1.45;color:#6f6862}
+@media(max-width:380px){.voiceModes{grid-template-columns:1fr}.timer{font-size:66px}}
+</style>
 <link rel="icon" type="image/png" sizes="512x512" href="im-pilates-icon.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<meta name="apple-mobile-web-app-title" content="IM Pilates">
 <meta name="theme-color" content="#f7f2ed">
 </head>
 <body>
 <main class="app">
 <header class="head">
-<div class="brand">
-<img class="brand-logo" src="apple-touch-icon.png" alt="IM Pilates logo">
-<div><div class="eyebrow">สำหรับอิมโดยเฉพาะ</div><h1>IM Pilates</h1></div>
-</div>
-<div class="pill">28 DAYS</div>
+  <div class="brand">
+    <img class="brand-logo" src="apple-touch-icon.png" alt="IM Pilates">
+    <div><div class="eyebrow">สำหรับอิมโดยเฉพาะ</div><h1>IM Pilates</h1></div>
+  </div>
+  <div class="pill">28 DAYS</div>
 </header>
 
 <section class="card">
-<div class="day" id="dayLabel"></div><div class="session" id="session"></div>
-<div class="exercise" id="exercise">พร้อมเริ่ม</div><div class="tip" id="tip"></div>
-<div class="timer" id="timer">00:00</div><div class="bar"><div class="fill" id="fill"></div></div>
-<div class="controls">
-<button class="btn primary" id="start">เริ่ม</button><button class="btn" id="pause">พัก</button><button class="btn" id="skip">ข้าม</button>
-</div>
-<div class="next"><span id="step"></span><span id="next"></span></div>
+  <div class="day" id="dayLabel">DAY 1 / 28</div>
+  <div class="session">Foundation Full Body · เบา–ปานกลาง · ประมาณ 13 นาที</div>
+  <div class="exercise" id="exercise">พร้อมเริ่ม</div>
+  <div class="timer" id="timer">00:00</div>
+  <div class="bar"><div class="fill" id="fill"></div></div>
+  <div class="controls">
+    <button class="btn primary" id="start">▶ เริ่ม</button>
+    <button class="btn" id="pause">Ⅱ พัก</button>
+    <button class="btn" id="skip">▶▶ ข้าม</button>
+  </div>
+  <div class="subrow">
+    <button class="smallbtn" id="replay">🔊 ฟังคำอธิบายอีกครั้ง</button>
+    <button class="smallbtn" id="voiceBtn">🔊 เสียงโค้ช: เปิด</button>
+  </div>
+  <div class="next"><span id="step">11 ช่วง</span><span id="next">กดเริ่มเมื่อพร้อม</span></div>
 </section>
 
-<section class="card"><b>เลือกวัน</b><div class="days" id="days"></div></section>
-<section class="card"><b id="planTitle"></b><div class="info" id="planInfo"></div></section>
-
-<section class="card install">
-<b>📱 ถ้าจะใช้เหมือนแอปบน iPhone</b>
-<p>หลังเปิดไฟล์นี้ใน Safari ให้กด <strong>แชร์ → เพิ่มไปยังหน้าจอโฮม (Add to Home Screen)</strong> แล้วเปิดจากไอคอน <strong>IM Pilates</strong> ได้เลย</p>
-<p>ถ้า Safari ไม่แสดงตัวเลือกนี้ ให้เปิดไฟล์จากแอป <strong>ไฟล์ (Files)</strong> แล้วเลือกแชร์/เปิดด้วย Safari ก่อน</p>
+<section class="card">
+  <div class="posebox">
+    <div id="mainPose" class="pose" aria-label="ภาพประกอบท่าออกกำลังกาย"></div><div class="poseBadge">ภาพสาธิต</div>
+    <div class="pose-title" id="poseTitle">ภาพท่าปัจจุบัน</div>
+  </div>
+  <div class="guide">
+    <h3>วิธีทำ</h3>
+    <div id="how"></div>
+    <div class="warn"><b>🌿 จุดที่ต้องระวัง</b><div id="safety"></div></div>
+  </div>
+  <button class="guideBtn" id="guideBtn">👀 ดูวิธีทำแบบเต็ม + ฟังคำอธิบาย</button>
+  <div class="voice">
+    <div><b>โค้ชเสียง</b><br><span id="voiceStatus">วางโทรศัพท์ไว้ข้างเสื่อแล้วฟังได้เลย</span></div>
+    <button class="toggle" id="voiceToggle">เปิด</button>
+  </div>
+  <div class="voiceModes" aria-label="โหมดเสียงโค้ช">
+    <button class="mode active" data-mode="full">🗣️ บรรยายเต็ม<small>อธิบาย + เตือน</small></button>
+    <button class="mode" data-mode="silent">🔕 เงียบ<small>มีสัญญาณ</small></button>
+    <button class="mode" data-mode="beep">🔔 สัญญาณ<small>เสียงเตือน</small></button>
+  </div>
+  <div class="cue"><b>ตอนนี้จะได้ยินอะไร</b><span id="cueText">ก่อนเริ่มจะบอกชื่อท่า ระหว่างท่าจะเตือนสั้น ๆ และก่อนเปลี่ยนท่าจะนับถอยหลัง</span></div>
 </section>
 
-<div class="note">⚠️ โปรแกรมนี้เป็นต้นแบบการออกกำลังระดับเบา–ปานกลาง ไม่ใช่การรักษา หากมีอาการปวดร้าว ชา อ่อนแรง เวียนศีรษะ หรืออาการหลัง/ขารุนแรงขึ้น ให้หยุดและปรึกษาผู้เชี่ยวชาญ</div>
+<section class="card">
+  <b>ลำดับการฝึก · DAY 1</b>
+  <div class="exercise-list" id="exerciseList"></div>
+</section>
+
+<section class="card">
+  <b>เลือกวัน</b>
+  <div class="days" id="days"></div>
+</section>
+
+<section class="card">
+  <b>🌼 วันนี้ไม่ต้องรีบ</b>
+  <div class="note">เป้าหมายของ Day 1 คือให้ร่างกายคุ้นกับการขยับ ไม่ใช่ทำให้เหนื่อยที่สุด ถ้าด้านขวาตึงกว่าปกติ ลดระยะการเคลื่อนไหวได้ทันที และไม่ต้องฝืนให้สองข้างเท่ากัน</div>
+</section>
+
+<div class="note">⚠️ โปรแกรมนี้เป็นการออกกำลังระดับเบา–ปานกลาง ไม่ใช่การรักษา หากมีอาการปวดร้าว ชา อ่อนแรง เวียนศีรษะ หรืออาการหลัง/ขารุนแรงขึ้น ให้หยุดและปรึกษาผู้เชี่ยวชาญ</div>
 </main>
 
-<script>
-const D={
-1:["Foundation Full Body",[["หายใจ + ขยับไหล่",45,"หายใจช้า ๆ ปล่อยไหล่ลง"],["Wall Pelvic Tilt",45,"ขยับนุ่ม ๆ ไม่กดหลังแรง"],["Wall Sit — เบา",30,"ลงเพียงเล็กน้อย"],["พัก",20,"ผ่อนขา"],["Glute Bridge",45,"บีบก้นเบา ๆ ไม่แอ่นหลัง"],["Dead Bug — ง่าย",45,"ขยับช้า หายใจตามปกติ"],["Wall Calf Raise",45,"จับกำแพงช่วยทรงตัว"],["พัก",20,"คลายไหล่และขา"],["Bird-Dog — แยกแขน/ขา",45,"เริ่มทีละข้าง รักษาลำตัวนิ่ง"],["Wall Chest Opener",45,"เปิดอกเบา ๆ"],["เดิน + หายใจ",60,"เดินสบาย ๆ ก่อนจบ"]]],
-2:["Mobility & Right-Side Release",[["หายใจ 360°",60,"หายใจรอบลำตัว"],["หมุนคอเบา ๆ",40,"เฉพาะช่วงที่สบาย"],["Shoulder Roll",40,"หมุนช้า ๆ"],["พัก",20,"ยืนสบาย"],["Cat-Cow ช่วงสั้น",50,"ไม่โยกแรง"],["Hip Shift เบา ๆ",50,"ถ่ายน้ำหนักช้า ๆ"],["Wall Hip Hinge",50,"พับจากสะโพก หลังเป็นธรรมชาติ"],["พัก",20,"เดินเบา ๆ"],["Figure-4 Stretch",50,"ด้านขวาไม่ต้องฝืน"],["Calf Stretch",50,"ตึงได้แต่ไม่เจ็บ"],["หายใจ + เดิน",60,"คลายตัว"]]],
-3:["Back + Core",[["หายใจ + เกร็งท้องเบา ๆ",50,"หายใจได้ตามปกติ"],["Wall Dead Bug",45,"ควบคุมเชิงกราน"],["Glute Bridge",50,"ใช้ก้น ไม่ใช้หลังยก"],["พัก",20,"คลายตัว"],["Bird-Dog สลับข้าง",50,"ลำตัวนิ่ง"],["Wall Row Isometric",45,"ศอกถอยหลัง ไม่ยกไหล่"],["Wall Squat — ตื้น",40,"ลงเท่าที่สบาย"],["พัก",20,"หายใจ"],["Heel Raise",40,"ขึ้นลงช้า"],["Wall Chest Opener",45,"ไม่แอ่นเอว"],["หายใจ + คลายหลัง",60,"จบเบา ๆ"]]],
-4:["Lower Body — Gentle",[["เดินอยู่กับที่",60,"ก้าวเล็ก ๆ"],["Wall Sit — ตื้น",35,"ไม่ต้องลงลึก"],["พัก",20,"คลายขา"],["Glute Bridge",50,"เน้นก้น"],["Side Leg Lift — ซ้าย",40,"ลำตัวนิ่ง"],["Side Leg Lift — ขวา",40,"ลดระยะถ้าขวาตึง"],["พัก",20,"ขยับข้อเท้า"],["Wall Hip Abduction — ซ้าย",40,"จับกำแพง"],["Wall Hip Abduction — ขวา",40,"ไม่ต้องยกสูง"],["Wall Calf Raise",45,"ช้าและสม่ำเสมอ"],["เดิน + หายใจ",60,"จบเบา ๆ"]]],
-5:["Upper Body + Posture",[["หายใจ + Shoulder Roll",60,"ผ่อนกรามและไหล่"],["Wall Angel — สั้น",45,"ไม่ฝืนไหล่"],["Wall Push-Up",45,"ลำตัวเป็นเส้นเดียว"],["พัก",20,"ผ่อนแขน"],["Wall Row Isometric",45,"ศอกถอยหลัง"],["Wall Chest Opener",45,"ไม่แอ่นเอว"],["Bird-Dog",45,"เน้นความนิ่ง"],["พัก",20,"หายใจ"],["Dead Bug — เบา",45,"ขยับทีละส่วน"],["Wall Sit — ตื้น",35,"ไม่ต้องลงลึก"],["เดิน + หายใจ",60,"คลายตัว"]]],
-6:["Full Body + Light Dumbbell",[["เดินอยู่กับที่",60,"เตรียมร่างกาย"],["Dumbbell Row — ซ้าย",40,"ใช้ดัมเบลเบามาก"],["Dumbbell Row — ขวา",40,"ไม่บิดตัว; ถ้าขวาตึงให้ข้าม"],["พัก",20,"วางดัมเบล"],["Wall Squat — ตื้น",40,"เข่าและเท้าแนวเดียวกัน"],["Glute Bridge",45,"บีบก้นเบา ๆ"],["Wall Push-Up",45,"ควบคุมช่วงลง"],["พัก",20,"หายใจ"],["Dumbbell Biceps Curl",45,"ไหล่ต่ำ ข้อมือตรง"],["Wall Calf Raise",45,"ช้า ๆ"],["หายใจ + เดิน",60,"จบเซสชัน"]]],
-7:["Recovery + Reset",[["หายใจ 360°",60,"ผ่อนท้องและไหล่"],["เดินช้า ๆ",60,"ก้าวสบาย ๆ"],["Shoulder Roll",45,"ขยับช่วงบน"],["พัก",20,"หายใจ"],["Cat-Cow ช่วงสั้น",50,"นุ่มนวล"],["Hip Hinge ที่กำแพง",50,"พับจากสะโพก"],["Calf Stretch",45,"ไม่ฝืน"],["พัก",20,"เดินเบา ๆ"],["Figure-4 Stretch",50,"ข้างขวาลดระยะได้"],["Wall Chest Opener",45,"เปิดอกเบา ๆ"],["หายใจ + เดิน",60,"จบสัปดาห์"]]]
-};
-for(let d=8;d<=28;d++)D[d]=["กำลังพัฒนา",[]];
+<div class="modal" id="modal"><div class="sheet">
+<div class="sheetHead"><div><div class="day" id="modalStep"></div><h2 id="modalTitle" style="margin:4px 0"></h2></div><button class="xbtn" id="closeModal">×</button></div>
+<div class="pose" id="modalPose"></div><div class="howto" id="howto"></div><div class="warning" id="warning"></div>
+<button class="speakBtn" id="speakGuide">🔊 ฟังคำอธิบายท่านี้</button></div></div><script>
+const exercises=[
+{name:"หายใจ + หมุนไหล่",time:60,pose:"breath",
+how:["นั่งหรือยืนในท่าสบาย","หายใจเข้าช้า ๆ แล้วผ่อนออกยาว ๆ","หมุนไหล่ไปด้านหลังเบา ๆ"],safety:"ไม่ยกไหล่เกร็ง และไม่ต้องพยายามสูดลมให้เต็มที่สุด",voice:"เริ่มด้วยการหายใจช้า ๆ ค่ะ ปล่อยไหล่ลง แล้วหมุนไหล่ไปด้านหลังเบา ๆ หายใจเข้า... และผ่อนลมหายใจออกยาว ๆ",cue:"ไหล่เบา ๆ · หายใจยาว · ไม่ต้องฝืน"},
+{name:"Wall Pelvic Tilt",time:60,pose:"pelvic",
+how:["ยืนพิงกำแพง เท้าห่างกำแพงเล็กน้อย","เกร็งหน้าท้องเบา ๆ","ค่อย ๆ ขยับเชิงกรานให้หลังส่วนล่างเข้าใกล้กำแพง"],safety:"ขยับเล็ก ๆ ไม่ต้องกดหลังแรง และอย่าเกร็งก้นจนเกินไป",voice:"ท่าต่อไป Wall Pelvic Tilt ค่ะ ยืนพิงกำแพง เกร็งหน้าท้องเบา ๆ แล้วค่อย ๆ ขยับเชิงกรานให้หลังส่วนล่างเข้าใกล้กำแพง ไม่ต้องกดแรงนะคะ",cue:"ขยับสั้น ๆ · หลังไม่ต้องกดแรง"},
+{name:"Wall Sit — เบา",time:45,pose:"wallsit",
+how:["ยืนพิงกำแพง เท้าก้าวออกมาด้านหน้า","ย่อตัวลงเพียงเล็กน้อย","ดันเท้ากับพื้นและรักษาลำตัวนิ่ง"],safety:"ไม่ต้องย่อลึก ถ้าเข่าหรือขาขวาตึง ให้ยกตัวสูงขึ้น",voice:"ยืนพิงกำแพงแล้วค่อย ๆ ย่อตัวลงเพียงเล็กน้อยค่ะ ไม่ต้องลงลึก รักษาเข่าให้อยู่ในแนวเดียวกับเท้า และหายใจตามปกติ",cue:"ย่อตื้น ๆ · เข่าตามแนวเท้า · หายใจปกติ"},
+{name:"พัก",time:30,pose:"rest",
+how:["ยืนหรือเดินช้า ๆ","ปล่อยแขนตามสบาย","หายใจให้เป็นธรรมชาติ"],safety:"พักคือส่วนหนึ่งของการฝึก ไม่ต้องรีบกลับเข้าท่า",voice:"พักค่ะ เดินช้า ๆ หรือยืนสบาย ๆ ปล่อยแขนและหายใจตามธรรมชาติ",cue:"พักจริง ๆ · คลายขา · หายใจสบาย"},
+{name:"Glute Bridge",time:60,pose:"bridge",
+how:["นอนหงาย ชันเข่า เท้าวางบนเสื่อ","เกร็งหน้าท้องเบา ๆ","ยกสะโพกขึ้นช้า ๆ แล้วลดลงอย่างควบคุม"],safety:"อย่าแอ่นหลังเพื่อยกสูง และไม่ต้องยกสะโพกสูงที่สุด",voice:"นอนหงาย ชันเข่า วางเท้าบนเสื่อค่ะ เกร็งหน้าท้องเบา ๆ แล้วบีบก้นยกสะโพกขึ้นช้า ๆ ไม่ต้องยกสูงมาก รักษาหลังให้สบาย",cue:"บีบก้น · ยกพอดี · ไม่แอ่นหลัง"},
+{name:"Dead Bug — ง่าย",time:60,pose:"deadbug",
+how:["นอนหงาย ยกแขนขึ้น","ชันเข่าหรือยกขาทีละข้างแบบง่าย","ขยับแขนหรือขาทีละส่วนช้า ๆ"],safety:"ถ้าหลังส่วนล่างแอ่นมาก ให้ลดระยะการขยับหรือวางเท้าลง",voice:"ท่า Dead Bug แบบง่ายค่ะ นอนหงาย เกร็งหน้าท้องเบา ๆ ขยับแขนหรือขาทีละส่วนช้า ๆ หายใจได้ตามปกติ ไม่ต้องเหยียดไกล",cue:"หน้าท้องนิ่ง · ขยับช้า · ลดระยะได้"},
+{name:"Wall Calf Raise",time:60,pose:"calf",
+how:["ยืนหันหน้าเข้ากำแพง ใช้มือแตะช่วยทรงตัว","ยกส้นเท้าขึ้นช้า ๆ","ลดส้นลงช้า ๆ"],safety:"น้ำหนักลงทั้งสองเท้าเท่าที่สบาย จับกำแพงได้ตลอด",voice:"จับกำแพงช่วยทรงตัวนะคะ ยกส้นเท้าขึ้นช้า ๆ แล้วลดลงช้า ๆ รักษาน้ำหนักให้มั่นคง ไม่ต้องขึ้นสูงมาก",cue:"จับกำแพงได้ · ขึ้นลงช้า · ไม่ต้องสูง"},
+{name:"พัก",time:30,pose:"rest",
+how:["เดินช้า ๆ หรือเขย่าขาเบา ๆ","หายใจลึกแบบสบาย","เตรียมตัวสำหรับท่าถัดไป"],safety:"ถ้ารู้สึกเหนื่อยมาก พักได้นานขึ้นก่อนเริ่มต่อ",voice:"พักอีกครั้งค่ะ เดินเบา ๆ หรือยืนสบาย ๆ หายใจให้เป็นธรรมชาติ เตรียมตัวสำหรับท่าถัดไป",cue:"คลายตัว · หายใจ · เตรียมท่าถัดไป"},
+{name:"Bird-Dog — แยกแขนและขา",time:60,pose:"birddog",
+how:["ตั้งสี่ขา มือใต้หัวไหล่ เข่าใต้สะโพก","เริ่มเหยียดแขนหรือขาทีละข้าง","เมื่อมั่นคงแล้วค่อยสลับข้าง"],safety:"ไม่ต้องยกสูง ไม่บิดสะโพก และถ้าด้านขวาตึงให้ลดระยะหรือหยุด",voice:"ท่าต่อไป Bird Dog ค่ะ ตั้งสี่ขา มืออยู่ใต้หัวไหล่ เข่าอยู่ใต้สะโพก เริ่มจากเหยียดแขนหรือขาทีละข้าง รักษาหลังให้ตรง ไม่ต้องยกสูง",cue:"หลังนิ่ง · ไม่บิดสะโพก · ขวาตึงให้ลดระยะ"},
+{name:"Wall Chest Opener",time:60,pose:"chest",
+how:["ยืนข้างกำแพงหรือกรอบประตู","วางแขนอย่างสบายแล้วค่อย ๆ เปิดอก","หายใจยาวและผ่อนคลายไหล่"],safety:"ต้องเป็นความรู้สึกตึงเบา ๆ ไม่ใช่เจ็บหรือชาที่แขน",voice:"ยืนข้างกำแพงแล้วค่อย ๆ เปิดอกค่ะ หายใจเข้าเบา ๆ ผ่อนออกยาว ๆ ปล่อยไหล่ลง ถ้ารู้สึกเจ็บหรือชาที่แขนให้หยุด",cue:"เปิดอกนุ่ม ๆ · ไหล่ลง · ไม่ฝืนแขน"},
+{name:"เดิน + หายใจ",time:90,pose:"walk",
+how:["เดินอยู่กับที่หรือเดินรอบห้อง","ก้าวสบาย ๆ","จับจังหวะหายใจให้เป็นธรรมชาติ"],safety:"ไม่ต้องเร่งความเร็ว วันนี้เราแค่พาร่างกายกลับมาสบาย ๆ",voice:"ช่วงสุดท้ายค่ะ เดินสบาย ๆ อยู่กับที่หรือรอบห้อง ก้าวเบา ๆ หายใจตามธรรมชาติ วันนี้ทำได้ดีมากแล้วค่ะ",cue:"เดินสบาย · ผ่อนลมหายใจ · จบอย่างนุ่มนวล"}
+];
 
-let day=1,i=-1,left=0,running=false,tick=null, audioCtx=null;
+let i=-1,left=0,running=false,tick=null,voiceOn=true,mode="full",lastCue=0;
 const $=id=>document.getElementById(id);
-function total(){return D[day][1].reduce((a,x)=>a+x[1],0)}
-function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
-function beep(freq=720,dur=.08){try{audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=freq;g.gain.value=.04;o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+dur)}catch(e){}}
-function render(){let dur=i>=0?D[day][1][i][1]:total();$("timer").textContent=fmt(left);$("fill").style.width=i>=0?((dur-left)/dur*100)+"%":"0%"}
-function ready(){pause();i=-1;left=total();let x=D[day];$("dayLabel").textContent=`DAY ${day} / 28`;$("session").textContent=x[0];$("exercise").textContent=x[1].length?"พร้อมเริ่ม":"กำลังพัฒนา";$("tip").textContent=x[1].length?`เซสชันประมาณ 15 นาที · ${x[1].length} ช่วง`:"เราจะเติมหลังจากทดลอง 7 วันแรก";$("step").textContent=x[1].length?`${x[1].length} ช่วง`:"—";$("next").textContent="กดเริ่ม";$("planTitle").textContent=`Day ${day} — ${x[0]}`;$("planInfo").innerHTML=x[1].length?"<ul>"+x[1].map(a=>`<li><b>${a[0]}</b> · ${a[1]} วินาที</li>`).join("")+"</ul>":"Day นี้ยังไม่เปิดใช้งาน";render()}
-function load(){let x=D[day][1][i];left=x[1];$("exercise").textContent=x[0];$("tip").textContent=x[2];$("step").textContent=`ช่วง ${i+1} / ${D[day][1].length}`;$("next").textContent=i<D[day][1].length-1?"ถัดไป — "+D[day][1][i+1][0]:"ช่วงสุดท้าย";render()}
-function start(){if(!D[day][1].length){alert("ตอนนี้มีโปรแกรม Day 1–7 ก่อนนะ 💗");return}if(running)return;audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();if(i<0){i=0;load()}beep();running=true;clearInterval(tick);tick=setInterval(()=>{left--;render();if(left<=0){beep(900,.09);if(i<D[day][1].length-1){i++;load()}else{pause();localStorage.setItem("imDone"+day,"1");document.querySelectorAll(".daybtn")[day-1].classList.add("done");$("exercise").textContent="จบแล้ว 🎉";$("tip").textContent="วันนี้ทำได้ดีมาก พัก ดื่มน้ำ และสังเกตร่างกาย";$("next").textContent="พร้อมสำหรับวันถัดไป"}}},1000)}
-function pause(){running=false;clearInterval(tick)}
-function skip(){if(i<0){start();return}if(i<D[day][1].length-1){beep(600);i++;load()}else{left=0;render()}}
-function selectDay(d){day=d;ready();document.querySelectorAll(".daybtn").forEach((b,n)=>b.classList.toggle("today",n===d-1))}
-for(let d=1;d<=28;d++){let b=document.createElement("button");b.className="daybtn";b.textContent=d;b.onclick=()=>selectDay(d);$("days").appendChild(b);if(localStorage.getItem("imDone"+d)==="1")b.classList.add("done")}
-$("start").onclick=start;$("pause").onclick=pause;$("skip").onclick=skip;selectDay(1);
+
+function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(Math.max(0,s%60)).padStart(2,"0")}
+function total(){return exercises.reduce((a,x)=>a+x.time,0)}
+function speak(text,force=false){
+  if(!voiceOn && !force) return;
+  if(!("speechSynthesis" in window)) return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang="th-TH"; u.rate=.88; u.pitch=1.02; u.volume=1;
+  speechSynthesis.speak(u);
+}
+function beep(freq=700,dur=.08){
+  try{
+    const C=window.AudioContext||window.webkitAudioContext;
+    if(!C)return;
+    const c=new C(),o=c.createOscillator(),g=c.createGain();
+    o.frequency.value=freq;g.gain.value=.035;o.connect(g);g.connect(c.destination);
+    o.start();o.stop(c.currentTime+dur);
+    setTimeout(()=>c.close(),200);
+  }catch(e){}
+}
+
+function poseSvg(type){
+ const base=`<svg viewBox="0 0 420 215" class="pose" xmlns="http://www.w3.org/2000/svg">
+ <rect x="0" y="0" width="420" height="215" rx="18" fill="#faf6f0"/>
+ <path d="M45 178 C130 168 290 168 375 178" fill="none" stroke="#e6ddd4" stroke-width="5" stroke-linecap="round"/>
+ <g fill="none" stroke="#5b564f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+ <circle cx="210" cy="57" r="19" fill="#f2d8c9" stroke="#5b564f"/>
+ <path d="M195 49 Q210 32 225 49" stroke="#8a6f5d" stroke-width="8"/>
+ <circle cx="203" cy="57" r="2" fill="#5b564f" stroke="none"/><circle cx="217" cy="57" r="2" fill="#5b564f" stroke="none"/>
+ <path d="M204 66 Q210 70 216 66" />
+ </g>`;
+ let body="";
+ if(type==="breath") body=`<g fill="none" stroke="#7e9079" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M183 82 Q210 98 237 82"/><path d="M181 87 L167 143 Q165 155 178 161"/><path d="M239 87 L253 143 Q255 155 242 161"/><path d="M178 161 Q210 174 242 161"/></g><g stroke="#b9c6b5" stroke-width="4" stroke-linecap="round"><path d="M145 72 q-16 -10 0 -20"/><path d="M275 72 q16 -10 0 -20"/></g>`;
+ if(type==="pelvic") body=`<rect x="306" y="35" width="18" height="143" rx="8" fill="#ded5cd"/><g fill="none" stroke="#7e9079" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M195 82 L235 82 L270 126 L270 168"/><path d="M235 82 L214 127 L170 168"/><path d="M214 127 L260 127"/></g>`;
+ if(type==="wallsit") body=`<rect x="318" y="25" width="18" height="153" rx="8" fill="#ded5cd"/><g fill="none" stroke="#7e9079" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M205 78 L285 83 L285 132 L250 132"/><path d="M250 132 L230 169"/><path d="M285 132 L305 169"/><path d="M205 78 L215 48"/><path d="M205 78 L180 109"/></g>`;
+ if(type==="rest") body=`<g fill="none" stroke="#7e9079" stroke-width="7" stroke-linecap="round"><path d="M183 85 Q210 103 237 85"/><path d="M183 90 L173 150"/><path d="M237 90 L247 150"/><path d="M173 150 L150 171"/><path d="M247 150 L270 171"/></g><path d="M152 178 Q210 190 268 178" fill="none" stroke="#c5d0c0" stroke-width="5" stroke-linecap="round"/>`;
+ if(type==="bridge") body=`<g fill="none" stroke="#7e9079" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M190 100 L240 100 L285 135 L305 169"/><path d="M190 100 L160 128 L130 169"/><path d="M160 128 L285 135"/></g><path d="M125 174 L310 174" stroke="#d9cec3" stroke-width="5"/>`;
+ if(type==="deadbug") body=`<g fill="none" stroke="#7e9079" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M185 101 L235 101"/><path d="M198 103 L155 65"/><path d="M225 103 L270 65"/><path d="M200 103 L170 150"/><path d="M225 103 L255 150"/></g>`;
+ if(type==="calf") body=`<rect x="312" y="32" width="18" height="145" rx="8" fill="#ded5cd"/><g fill="none" stroke="#7e9079" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M195 83 L240 83 L270 125"/><path d="M270 125 L250 171"/><path d="M270 125 L295 171"/><path d="M195 83 L180 53"/><path d="M195 83 L215 54"/></g>`;
+ if(type==="birddog") body=`<g fill="none" stroke="#7e9079" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M145 124 L205 106 L255 124"/><path d="M145 124 L110 154"/><path d="M255 124 L300 153"/><path d="M205 106 L190 153"/><path d="M255 124 L286 91"/><path d="M145 124 L105 100"/></g>`;
+ if(type==="chest") body=`<rect x="92" y="32" width="18" height="145" rx="8" fill="#ded5cd"/><g fill="none" stroke="#7e9079" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M192 83 L230 83 L270 122"/><path d="M230 83 L170 53"/><path d="M270 122 L245 169"/><path d="M245 169 L205 169"/></g>`;
+ if(type==="walk") body=`<g fill="none" stroke="#7e9079" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M195 83 L235 83 L260 125"/><path d="M235 83 L210 122"/><path d="M210 122 L180 169"/><path d="M260 125 L300 169"/><path d="M195 83 L170 52"/><path d="M235 83 L270 55"/></g><g stroke="#b9c6b5" stroke-width="4" stroke-linecap="round"><path d="M120 80 h35"/><path d="M290 85 h35"/></g>`;
+ return base+body+`</svg>`;
+}
+function renderPose(x){
+ $("mainPose").innerHTML=poseSvg(x.pose);
+ $("poseTitle").textContent=x.name;
+ $("how").innerHTML="<ul>"+x.how.map(t=>`<li>${t}</li>`).join("")+"</ul>";
+ $("safety").textContent=x.safety;
+ $("cueText").textContent=x.cue||"ทำช้า ๆ หายใจสบาย ๆ และไม่ฝืนร่างกาย";
+}
+function renderList(){
+ $("exerciseList").innerHTML=exercises.map((x,n)=>`
+ <button class="exitem ${n===i?'active':''}" onclick="jumpTo(${n})">
+   <span class="num">${n+1}</span><span class="miniPose">${poseSvg(x.pose)}</span><span class="exname">${x.name}</span><span class="extime">${fmt(x.time)}</span>
+ </button>`).join("");
+}
+function render(){
+ const dur=i>=0?exercises[i].time:total();
+ $("timer").textContent=fmt(left);
+ $("fill").style.width=(i>=0 && dur)?((dur-left)/dur*100)+"%":"0%";
+ if(i>=0){
+   const x=exercises[i]; renderPose(x);
+   $("exercise").textContent=x.name;
+   $("step").textContent=`ช่วง ${i+1} / ${exercises.length}`;
+   $("next").textContent=i<exercises.length-1?`ถัดไป · ${exercises[i+1].name}`:"ช่วงสุดท้าย";
+ } else {
+   $("exercise").textContent="พร้อมเริ่ม";
+   $("step").textContent=`${exercises.length} ช่วง · ${fmt(total())}`;
+   $("next").textContent="กดเริ่มเมื่อพร้อม";
+   renderPose(exercises[0]);
+ }
+ renderList();
+}
+function announceStart(){
+  if(!voiceOn || mode!=="full") return;
+  const x=exercises[i];
+  speak(x.voice);
+}
+function doTick(){
+  if(!running)return;
+  left--;
+  render();
+  if(mode==="full" && left===Math.ceil(exercises[i].time/2) && exercises[i].time>=60){
+    speak("ค่อย ๆ ทำต่อค่ะ หายใจสบาย ๆ");
+  }
+  if(left===15 && exercises[i].time>=45 && mode==="full"){
+    speak("อีก 15 วินาทีค่ะ");
+  }
+  if(left===10){
+    beep(820,.08);
+    if(mode==="full") speak("อีก 10 วินาทีค่ะ");
+  }
+  if(left<=5 && left>0){
+    beep(620,.05);
+  }
+  if(left<=0){
+    clearInterval(tick); tick=null; running=false; beep(950,.1);
+    if(i<exercises.length-1){
+      i++; left=exercises[i].time; render();
+      setTimeout(()=>{
+        if(mode!=="beep") announceStart();
+        running=true; tick=setInterval(doTick,1000);
+      },450);
+    } else finish();
+  }
+}
+function start(){
+  if(running)return;
+  if(i<0){i=0;left=exercises[0].time;render();}
+  else if(left<=0){left=exercises[i].time;render();}
+  running=true; beep();
+  if(mode!=="beep") announceStart();
+  clearInterval(tick); tick=setInterval(doTick,1000);
+}
+function pause(){running=false;clearInterval(tick);tick=null;if(window.speechSynthesis)speechSynthesis.cancel()}
+function skip(){pause(); if(i<exercises.length-1){i++;left=exercises[i].time;render();if(mode!=="beep")announceStart();}else finish();}
+function jumpTo(n){pause();i=n;left=exercises[i].time;render();if(mode!=="beep")announceStart()}
+
+function finish(){
+ pause(); left=0; render();
+ $("exercise").textContent="เสร็จแล้ว 🎉";
+ $("next").textContent="Day 1 complete";
+ $("poseTitle").textContent="เก่งมาก";
+ $("voiceStatus").textContent="วันนี้ทำครบแล้ว พัก ดื่มน้ำ และสังเกตร่างกาย";
+ localStorage.setItem("imDay1Done","1");
+ document.querySelectorAll(".daybtn")[0]?.classList.add("done");
+ if(voiceOn && mode==="full") speak("จบ Day 1 แล้วค่ะ เก่งมาก วันนี้พัก ดื่มน้ำ และให้ร่างกายได้ฟื้นตัวนะคะ",true);
+}
+$("start").onclick=start;
+$("pause").onclick=pause;
+$("skip").onclick=skip;
+$("replay").onclick=()=>{if(i>=0)speak(exercises[i].voice,true);else speak("วันนี้เป็น Foundation Full Body ค่ะ กดเริ่มเมื่อพร้อม",true)};
+function setVoice(on){
+ voiceOn=on;
+ $("voiceToggle").textContent=on?"เปิด":"ปิด";
+ $("voiceToggle").classList.toggle("off",!on);
+ $("voiceBtn").textContent=on?"🔊 เสียงโค้ช: เปิด":"🔇 เสียงโค้ช: ปิด";
+ $("voiceStatus").textContent=on?"วางโทรศัพท์ไว้ข้างเสื่อแล้วฟังได้เลย":"ปิดเสียงโค้ชแล้ว จะเหลือเสียงเตือนและตัวจับเวลา";
+ if(!on)speechSynthesis?.cancel();
+}
+$("voiceToggle").onclick=()=>setVoice(!voiceOn);
+$("voiceBtn").onclick=()=>setVoice(!voiceOn);
+
+for(let d=1;d<=28;d++){
+ const b=document.createElement("button");
+ b.className="daybtn"+(d===1?" today":"");
+ b.textContent=d;
+ b.onclick=()=>{
+   if(d!==1){alert("ตอนนี้เราเปิด Day 1 ก่อนนะ 💗 เดี๋ยวค่อยเติม Day 2–28 หลังจากทดลอง Day 1");return;}
+   document.querySelectorAll(".daybtn").forEach(x=>x.classList.remove("today"));
+   b.classList.add("today");
+ };
+ if(d===1 && localStorage.getItem("imDay1Done")==="1")b.classList.add("done");
+ $("days").appendChild(b);
+}
+function openGuide(){
+  if(i<0)i=0;
+  const x=exercises[i];
+  $("modalStep").textContent=`ช่วง ${i+1} / ${exercises.length}`;
+  $("modalTitle").textContent=x.name;
+  $("modalPose").innerHTML=poseSvg(x.pose);
+  $("howto").innerHTML=`<h3>วิธีทำ</h3><ul>${x.how.map(t=>`<li>${t}</li>`).join("")}</ul>`;
+  $("warning").innerHTML=`<b>🌿 จุดที่ต้องระวัง</b><br>${x.safety}`;
+  $("modal").classList.add("show");
+}
+$("guideBtn").onclick=openGuide;
+$("closeModal").onclick=()=>$("modal").classList.remove("show");
+$("modal").addEventListener("click",e=>{if(e.target.id==="modal")$("modal").classList.remove("show")});
+$("speakGuide").onclick=()=>{if(i<0)i=0;speak(exercises[i].voice,true)};
+document.querySelectorAll(".mode[data-mode]").forEach(btn=>btn.addEventListener("click",()=>{
+  mode=btn.dataset.mode;
+  document.querySelectorAll(".mode[data-mode]").forEach(b=>b.classList.toggle("active",b===btn));
+  const texts={full:"ก่อนเริ่มจะบอกชื่อท่า ระหว่างท่าจะเตือนสั้น ๆ และก่อนเปลี่ยนท่าจะนับถอยหลัง",silent:"ไม่มีเสียงพูด มีเพียงเสียงสัญญาณเริ่ม/จบและตัวจับเวลา",beep:"ไม่มีเสียงบรรยาย มีเฉพาะเสียงสัญญาณเตือนเพื่อบอกจังหวะ"};
+  $("cueText").textContent=texts[mode];
+}));
+window.addEventListener("beforeunload",()=>{if(window.speechSynthesis)speechSynthesis.cancel();clearInterval(tick)});
+
+render();
 </script>
 </body>
 </html>
